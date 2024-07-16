@@ -14,12 +14,7 @@
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sheetrock/1.1.4/dist/sheetrock.min.js"></script> 
     </head>
-    <body style="background-color: rgb(246,246,246);" onload="window.onload = function() {
-    if (!window.location.hash) {
-        window.location = window.location + '#loaded';
-        window.location.reload();
-    }
-}" >
+    <body style="background-color: rgb(246,246,246);"  >
         <!--Picture-->
         <div style="position: relative;">
         <img style=" width: 100%" src = 'images/IMG_1805.jpg'>
@@ -41,7 +36,7 @@
         <br>
         <hr style="height:2px; border-width:0;color:#0475bc; background-color:#0475bc">
         <br>
-        <div id = 'map', style = 'width:100%; min-height:700px' onload="draw"></div>
+        <div id = 'map', style = 'width:100%; min-height:700px' onload="setTimeout(draw, 5000)"></div>
             <script>
                 mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hZ2lzdHJhbGUiLCJhIjoiY2xyanM3bTQ5MDFqMjJqcHdtem1uZmk3aiJ9.OLS4djSvledebuYH2fLFSg';
                 const map = new mapboxgl.Map({
