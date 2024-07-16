@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset = 'utf-8'>
+        <meta name = 'viewport' content = 'width = device-width, initial-scale = 1'>
+        <title>FPP Maintenance Reporting Tool</title>
+        
+        <!--for mapbox-->
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
+        
+        <!--for sheetrock-->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sheetrock/1.1.4/dist/sheetrock.min.js"></script> 
+    </head>
+    <body style="background-color: rgb(246,246,246);">
+        <!--Picture-->
+        <div style="position: relative;">
+        <img style=" width: 100%" src = '/Users/annamagistrale/Desktop/GEOM_4005/Course_Material/3/A2Files/Meeting/Map/images/IMG_1805.jpg'>
+        </div>
+
+        <!--Banner-->
+        <div  class="banner" style="width:90px; height:130px; background-color:white; position:absolute; top: 8px; left: 30px;">
+        <img style="margin: 18px 0px 0px 15px;" src="https://www.ontarioparks.ca/images/svg/op-logo-vertical-colour.svg" width="60" height="100" alt="Ontario Parks Logo">
+        </div>
+     
+        <!--Add basemap-->
+        <div  class = 'div3'>
+            <h2 style='color:#0475bc; margin: 15px 0px 15px 0px; font-family: Calibri, opensans, sans-serif; font-weight: 600; font-size: 2.5rem;'>
+            Take a look at your issue on the map!
+            </h2>
+            
+            <p style="font-family: Calibri, opensans, sans-serif; font-size: 1.1rem">Thank you for taking the time to complete this form. Your contibution will assist staff in keeping Fitzroy healthy while exploring the benefits of citizen science.</p>
+        </div>
+        <br>
+        <hr style="height:2px; border-width:0;color:#0475bc; background-color:#0475bc">
+        <br>
+        <div id = 'map', style = 'width:100%; min-height:700px' onload="draw"></div>
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hZ2lzdHJhbGUiLCJhIjoiY2xyanM3bTQ5MDFqMjJqcHdtem1uZmk3aiJ9.OLS4djSvledebuYH2fLFSg';
+                const map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/amagistrale/cltgq0i0f007301qo6xuz0yfa', // style URL
+                    center: [-76.221, 45.482], // starting position [lng, lat]
+                    zoom: 13.5, // starting zoom
+                });
+            </script>
+        <!--Sheetrock method to log data to console-->
+        <div id = 'display'></div>
+        <script>
+            var marker = new mapboxgl.Marker();
+            sheetrock({
+                url: 'https://docs.google.com/spreadsheets/d/15XJHwzvbhwnOsn1EKw4tm8dfNjxnb9isd3Za6HbN-a0/edit#gid=645545594',
+                callback: draw   });
+
+            function draw(error, options, response) {
+                data=response.rows;
+                console.log(data.length);
+                lendata = (data.length) - 1
+                marker.setLngLat([data[lendata].cellsArray[7], data[lendata].cellsArray[6]]).addTo(map)
+                marker.setPopup(new mapboxgl.Popup()
+                .setHTML("<p><b>Issue:</b></p>"+ data[lendata].cellsArray[4]))        
+            }
+
+        </script>
+        <div style = "width:170px; height:150px; top: 8px; left: 120px; float:right">
+            <img style="margin: 0px 0px 0px 0px"src="/Users/annamagistrale/Desktop/GEOM_4005/Course_Material/3/A2Files/Meeting/Map/images/B_Logo_H-RGBRedBlackonLight72_130821.png" width="170" height="100"  alt="Carleton University Logo">
+        </div>
+    </body>
+</html>
